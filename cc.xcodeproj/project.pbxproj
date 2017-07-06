@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F8FA02E1F0DE65F00CD77BD /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8FA02D1F0DE65F00CD77BD /* RootViewController.m */; };
+		8F8FA0311F0DF16600CD77BD /* ZZPagerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8FA0301F0DF16600CD77BD /* ZZPagerController.m */; };
+		8FADBE391F0E15DA002F5911 /* Model.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FADBE381F0E15DA002F5911 /* Model.m */; };
+		8FADBE3C1F0E3F28002F5911 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FADBE3B1F0E3F28002F5911 /* WebViewController.m */; };
 		8FB6BEC01F0DDC8800D02C32 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FB6BEBF1F0DDC8800D02C32 /* main.m */; };
 		8FB6BEC31F0DDC8800D02C32 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FB6BEC21F0DDC8800D02C32 /* AppDelegate.m */; };
 		8FB6BEC61F0DDC8800D02C32 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FB6BEC51F0DDC8800D02C32 /* ViewController.m */; };
@@ -27,6 +31,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8F8FA02C1F0DE65F00CD77BD /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		8F8FA02D1F0DE65F00CD77BD /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		8F8FA02F1F0DF16600CD77BD /* ZZPagerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZZPagerController.h; sourceTree = "<group>"; };
+		8F8FA0301F0DF16600CD77BD /* ZZPagerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZZPagerController.m; sourceTree = "<group>"; };
+		8FADBE371F0E15DA002F5911 /* Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
+		8FADBE381F0E15DA002F5911 /* Model.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Model.m; sourceTree = "<group>"; };
+		8FADBE3A1F0E3F28002F5911 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		8FADBE3B1F0E3F28002F5911 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		8FB6BEBA1F0DDC8800D02C32 /* cc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FB6BEBE1F0DDC8800D02C32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8FB6BEBF1F0DDC8800D02C32 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -81,6 +93,11 @@
 		8FB6BEBC1F0DDC8800D02C32 /* cc */ = {
 			isa = PBXGroup;
 			children = (
+				8FB6BEBD1F0DDC8800D02C32 /* Supporting Files */,
+				8F8FA02F1F0DF16600CD77BD /* ZZPagerController.h */,
+				8F8FA0301F0DF16600CD77BD /* ZZPagerController.m */,
+				8F8FA02C1F0DE65F00CD77BD /* RootViewController.h */,
+				8F8FA02D1F0DE65F00CD77BD /* RootViewController.m */,
 				8FB6BEC11F0DDC8800D02C32 /* AppDelegate.h */,
 				8FB6BEC21F0DDC8800D02C32 /* AppDelegate.m */,
 				8FB6BEC41F0DDC8800D02C32 /* ViewController.h */,
@@ -88,7 +105,10 @@
 				8FB6BEC71F0DDC8800D02C32 /* Main.storyboard */,
 				8FB6BECA1F0DDC8800D02C32 /* Images.xcassets */,
 				8FB6BECC1F0DDC8800D02C32 /* LaunchScreen.xib */,
-				8FB6BEBD1F0DDC8800D02C32 /* Supporting Files */,
+				8FADBE371F0E15DA002F5911 /* Model.h */,
+				8FADBE381F0E15DA002F5911 /* Model.m */,
+				8FADBE3A1F0E3F28002F5911 /* WebViewController.h */,
+				8FADBE3B1F0E3F28002F5911 /* WebViewController.m */,
 			);
 			path = cc;
 			sourceTree = "<group>";
@@ -220,6 +240,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8FB6BEC61F0DDC8800D02C32 /* ViewController.m in Sources */,
+				8FADBE3C1F0E3F28002F5911 /* WebViewController.m in Sources */,
+				8F8FA02E1F0DE65F00CD77BD /* RootViewController.m in Sources */,
+				8F8FA0311F0DF16600CD77BD /* ZZPagerController.m in Sources */,
+				8FADBE391F0E15DA002F5911 /* Model.m in Sources */,
 				8FB6BEC31F0DDC8800D02C32 /* AppDelegate.m in Sources */,
 				8FB6BEC01F0DDC8800D02C32 /* main.m in Sources */,
 			);
@@ -416,6 +440,7 @@
 				8FB6BEDF1F0DDC8800D02C32 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8FB6BEE01F0DDC8800D02C32 /* Build configuration list for PBXNativeTarget "ccTests" */ = {
 			isa = XCConfigurationList;
@@ -424,6 +449,7 @@
 				8FB6BEE21F0DDC8800D02C32 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
