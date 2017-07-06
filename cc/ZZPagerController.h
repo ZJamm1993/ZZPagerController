@@ -26,6 +26,8 @@
 @interface ZZPagerController : UIViewController
 
 @property (nonatomic,weak) id<ZZPagerControllerDataSource> dataSource;
+@property (nonatomic,strong) UIColor* menuNormalColor;
+@property (nonatomic,strong) UIColor* menuSelectedColor;
 -(void)refreshSubviews;
 
 @end
@@ -50,6 +52,7 @@
 
 @property (nonatomic,strong) UIColor* normalColor;
 @property (nonatomic,strong) UIColor* selectedColor;
+
 @property (nonatomic,assign) CGFloat currentPage;
 -(void)refreshSubviews;
 

@@ -45,7 +45,20 @@
     menuView.delegate=self;
     menuView.selectedColor=[UIColor colorWithRed:1 green:0.5 blue:0.5 alpha:1];
     menuView.normalColor=[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1];
+    menuView.backgroundColor=[UIColor whiteColor];
     [self.view addSubview:menuView];
+}
+
+-(void)setMenuNormalColor:(UIColor *)menuNormalColor
+{
+    _menuNormalColor=menuNormalColor;
+    menuView.normalColor=_menuNormalColor;
+}
+
+-(void)setMenuSelectedColor:(UIColor *)menuSelectedColor
+{
+    _menuSelectedColor=menuSelectedColor;
+    menuView.selectedColor=_menuSelectedColor;
 }
 
 -(void)setDataSource:(id<ZZPagerControllerDataSource>)dataSource
@@ -229,10 +242,10 @@
 
 -(void)refreshSubviews
 {
-    if (!bg) {
-        bg=[[UIVisualEffectView alloc]initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
-        [self addSubview:bg];
-    }
+//    if (!bg) {
+//        bg=[[UIVisualEffectView alloc]initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
+//        [self addSubview:bg];
+//    }
     
     if (!line) {
         line=[[UIView alloc]init];
@@ -248,7 +261,7 @@
         btns=[NSMutableArray array];
     }
     
-    bg.frame=self.bounds;
+//    bg.frame=self.bounds;
     
     for (UIView* vi in btns) {
         [vi removeFromSuperview];
@@ -300,6 +313,7 @@
 
 -(void)clickingChangePage:(NSInteger)page
 {
+    [self selectedButtonAtIndex:page];
     if (page>=titleCount) {
         return;
     }
@@ -330,19 +344,32 @@
     }
 }
 
+-(void)selectedButtonAtIndex:(NSInteger)index
+{
+    for (int i=0;i<btns.count;i++) {
+        UIButton* bb=[btns objectAtIndex:i];
+        bb.selected=(i==index);
+    }
+}
+
 -(void)setCurrentPage:(CGFloat)currentPage
 {
 //    _currentPage=currentPage;
-    NSLog(@"%f",currentPage);
+//    NSLog(@"%f",currentPage);
+//    
+//    NSLog(@"int %d",(int)-1.2);
     
     if (!shouldManualAnimation) {
         return;
     }
-    if (currentPage<0) {
-        currentPage=currentPage-1;
-    }
+//    if (currentPage<0) {
+//        currentPage=currentPage-1;
+//    }
     
     CGFloat index=(CGFloat)((NSInteger)currentPage);
+    if (currentPage<0) {
+        index=index-1;
+    }
     CGFloat percent=currentPage-index;
     
     CGRect min=CGRectMake(0, 0, 0, 0);
@@ -375,6 +402,16 @@
     if (right) {
         x=x+(right.frame.origin.x-x)*percent;
         width=width+(right.frame.size.width-width)*percent;
+    }
+    
+    BOOL leftHeight=(percent<0.5);
+    if ([left isKindOfClass:[UIButton class]]) {
+        UIButton* lb=(UIButton*)left;
+        lb.selected=leftHeight;
+    }
+    if ([right isKindOfClass:[UIButton class]]) {
+        UIButton* rb=(UIButton*)right;
+        rb.selected=!leftHeight;
     }
     
     CGRect fr=line.frame;

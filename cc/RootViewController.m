@@ -64,7 +64,7 @@
 
 -(CGRect)pagerController:(ZZPagerController *)pager frameForMenuView:(ZZPagerMenu *)menu
 {
-    return CGRectMake(0, 64, self.view.frame.size.width, 40);
+    return CGRectMake(0, 0, self.view.frame.size.width, 40);
 }
 
 -(CGRect)pagerController:(ZZPagerController *)pager frameForContentView:(UIScrollView *)scrollView
