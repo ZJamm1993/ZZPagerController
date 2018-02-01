@@ -10,6 +10,9 @@
 @class ZZPagerController;
 @class ZZPagerMenu;
 
+#define ZZPagerDefaultNavigationBarHeight (44)
+#define ZZPagerDefaultStatusBarHeight ([UIApplication sharedApplication].statusBarFrame.size.height)
+
 @protocol ZZPagerControllerDataSource<NSObject>
 
 @required
@@ -28,6 +31,7 @@
 @property (nonatomic,weak) id<ZZPagerControllerDataSource> dataSource;
 @property (nonatomic,strong) UIColor* menuNormalColor;
 @property (nonatomic,strong) UIColor* menuSelectedColor;
+@property (nonatomic,assign) NSInteger selectedPage;
 -(void)refreshSubviews;
 
 @end
@@ -54,6 +58,9 @@
 @property (nonatomic,strong) UIColor* selectedColor;
 
 @property (nonatomic,assign) CGFloat currentPage;
+@property (nonatomic,assign) NSInteger selectedPage;
+
 -(void)refreshSubviews;
 
 @end
+

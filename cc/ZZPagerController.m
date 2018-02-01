@@ -22,6 +22,18 @@
 
 @implementation ZZPagerController
 
+-(CGRect)pagerController:(ZZPagerController *)pager frameForMenuView:(ZZPagerMenu *)menu
+{
+    return CGRectMake(0, 0, self.view.frame.size.width, 40);
+}
+
+-(CGRect)pagerController:(ZZPagerController *)pager frameForContentView:(UIScrollView *)scrollView
+{
+    CGRect menuR=[self pagerController:pager frameForMenuView:nil];
+    CGFloat menuMy=CGRectGetMaxY(menuR);
+    return CGRectMake(0, menuMy, self.view.frame.size.width, self.view.frame.size.height-menuMy-ZZPagerDefaultStatusBarHeight-ZZPagerDefaultNavigationBarHeight);
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets=NO;
@@ -38,15 +50,35 @@
     contentView.alwaysBounceVertical=NO;
     contentView.scrollsToTop=NO;
     contentView.delegate=self;
+    contentView.backgroundColor=[UIColor groupTableViewBackgroundColor];
     [self.view addSubview:contentView];
     
     menuView=[[ZZPagerMenu alloc]init];
     menuView.dataSource=self;
     menuView.delegate=self;
-    menuView.selectedColor=[UIColor colorWithRed:1 green:0.5 blue:0.5 alpha:1];
-    menuView.normalColor=[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1];
+    if (!self.menuNormalColor) {
+        menuView.normalColor= [UIColor grayColor];;
+    }
+    if (!self.menuSelectedColor) {
+        menuView.selectedColor=[UIColor blueColor];;
+    }
     menuView.backgroundColor=[UIColor whiteColor];
     [self.view addSubview:menuView];
+}
+
+-(void)setSelectedPage:(NSInteger)selectedPage
+{
+    //    _selectedPage=selectedPage;
+    CGFloat offx=selectedPage*contentView.frame.size.width;
+    [contentView setContentOffset:CGPointMake(offx, 0) animated:NO];
+    
+    //    CGFloat pagefloat=contentView.contentOffset.x/contentView.frame.size.width;
+    menuView.selectedPage=selectedPage;
+}
+
+-(NSInteger)selectedPage
+{
+    return [self pageIndexForScrollView:contentView];
 }
 
 -(void)setMenuNormalColor:(UIColor *)menuNormalColor
@@ -139,10 +171,10 @@
             [vi removeFromSuperview];
             [contentView addSubview:vi];
             if (i==0) {
-                vi.userInteractionEnabled=YES;
+                //                vi.userInteractionEnabled=YES;
             }
             else {
-                vi.userInteractionEnabled=NO;
+                //                vi.userInteractionEnabled=NO;
                 vi.hidden=YES;
             }
             
@@ -154,14 +186,24 @@
     menuView.delegate=self;
 }
 
+-(void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView //using "end animation" rather than "end decelerating" so that we can catch any "end" if dragged or not;
+{
+    [self hideThoseViewsWhenScrolledScrollView:scrollView];
+}
+
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self hideThoseViewsWhenScrolledScrollView:scrollView];
+}
+
+-(void)hideThoseViewsWhenScrolledScrollView:(UIScrollView*)scrollView
 {
     if (scrollView==contentView) {
         NSInteger index=[self pageIndexForScrollView:scrollView];
         for (int i=0;i<controllers.count;i++) {
             UIViewController* vc=[controllers objectAtIndex:i];
             BOOL isThat=(index==i);
-            vc.view.userInteractionEnabled=isThat;
+            //            vc.view.userInteractionEnabled=isThat;
             vc.view.hidden=!isThat;
         }
     }
@@ -172,16 +214,16 @@
     
     
     if (scrollView==contentView) {
-//        NSInteger index=[self pageIndexForScrollView:scrollView];
-//        NSLog(@"didScroll:%d",index);
+        //        NSInteger index=[self pageIndexForScrollView:scrollView];
+        //        NSLog(@"didScroll:%ld",index);
         for (UIViewController* vc in controllers) {
             vc.view.hidden=NO;
         }
         
-//        if (scrollView.isDragging) {
-            CGFloat pagefloat=scrollView.contentOffset.x/scrollView.frame.size.width;
-            menuView.currentPage=pagefloat;
-//        }
+        //        if (scrollView.isDragging) {
+        CGFloat pagefloat=scrollView.contentOffset.x/scrollView.frame.size.width;
+        menuView.currentPage=pagefloat;
+        //        }
     }
 }
 
@@ -228,6 +270,7 @@
     UIView* line;
     BOOL shouldManualAnimation;
     NSMutableArray* btns;
+    UIView* shadow;
 }
 @end
 
@@ -242,15 +285,21 @@
 
 -(void)refreshSubviews
 {
-//    if (!bg) {
-//        bg=[[UIVisualEffectView alloc]initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
-//        [self addSubview:bg];
-//    }
+    //    if (!bg) {
+    //        bg=[[UIVisualEffectView alloc]initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
+    //        [self addSubview:bg];
+    //    }
     
     if (!line) {
         line=[[UIView alloc]init];
         line.backgroundColor=self.selectedColor;
         [self addSubview:line];
+    }
+    
+    if (!shadow) {
+        shadow=[[UIView alloc]init];
+        shadow.backgroundColor=[UIColor groupTableViewBackgroundColor];
+        [self addSubview:shadow];
     }
     
     if(!titles){
@@ -261,7 +310,10 @@
         btns=[NSMutableArray array];
     }
     
-//    bg.frame=self.bounds;
+    
+    shadow.frame=CGRectMake(0, self.frame.size.height-0.5, self.frame.size.width, 0.5);
+    
+    //    bg.frame=self.bounds;
     
     for (UIView* vi in btns) {
         [vi removeFromSuperview];
@@ -354,17 +406,17 @@
 
 -(void)setCurrentPage:(CGFloat)currentPage
 {
-//    _currentPage=currentPage;
-//    NSLog(@"%f",currentPage);
-//    
-//    NSLog(@"int %d",(int)-1.2);
+    //    _currentPage=currentPage;
+    //    NSLog(@"%f",currentPage);
+    //
+    //    NSLog(@"int %ld",(long)-1.2);
     
     if (!shouldManualAnimation) {
         return;
     }
-//    if (currentPage<0) {
-//        currentPage=currentPage-1;
-//    }
+    //    if (currentPage<0) {
+    //        currentPage=currentPage-1;
+    //    }
     
     CGFloat index=(CGFloat)((NSInteger)currentPage);
     if (currentPage<0) {
@@ -387,9 +439,9 @@
     CGFloat x=min.origin.x;
     CGFloat width=min.size.width;
     
-//    if (!left) {
-//        left=[[UIView alloc]initWithFrame:min];
-//    }
+    //    if (!left) {
+    //        left=[[UIView alloc]initWithFrame:min];
+    //    }
     if (left) {
         x=left.frame.origin.x;
         width=left.frame.size.width;
@@ -420,6 +472,12 @@
     line.frame=fr;
 }
 
+-(void)setSelectedPage:(NSInteger)selectedPage
+{
+    [self clickingChangePage:selectedPage];
+    //    [self setCurrentPage:selectedPage];
+}
+
 -(void)setSelectedColor:(UIColor *)selectedColor
 {
     _selectedColor=selectedColor;
@@ -440,3 +498,4 @@
 }
 
 @end
+
